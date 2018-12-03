@@ -17,8 +17,8 @@ public class BeerResource {
     private Beers beers;
 
     @GetMapping
-    public List<String>all(){
-        return Arrays.asList("Pulanner", "Colorado Indigo", "Corona", "Itaipava", "Bohemia");
+    public List<Beer>all(){
+        return beers.findAll();
     }
 
     @PostMapping
