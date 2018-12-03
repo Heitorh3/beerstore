@@ -1,5 +1,6 @@
 package com.hibicode.beerstore.error;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,10 +47,20 @@ public class ApiExceptionHandler {
 
     }
 
-    private ApiError toApiError(String code, Locale locale){
+    @ExceptionHandler(InvalidFormatException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidFormatException(InvalidFormatException exception, Locale locale){
+
+        final String erroCode = "generic-1";
+        final HttpStatus status = HttpStatus.BAD_REQUEST;
+        final ErrorResponse errorResponse = ErrorResponse.of(status, toApiError(erroCode, locale, exception.getValue()));
+
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    private ApiError toApiError(String code, Locale locale, Object... args){
         String message;
         try{
-            message = apiErrorMessageSource.getMessage(code, null,  locale);
+            message = apiErrorMessageSource.getMessage(code, args,  locale);
         }catch (NoSuchMessageException e){
             LOG.error("Cold not find any message for {} code under {} locale", code, locale);
             message = NO_MESSAGE_AVAILABLE;

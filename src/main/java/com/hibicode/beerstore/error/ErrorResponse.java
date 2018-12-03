@@ -1,7 +1,6 @@
 package com.hibicode.beerstore.error;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 

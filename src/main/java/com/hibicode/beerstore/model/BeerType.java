@@ -4,5 +4,6 @@ public enum BeerType {
 
     LAGER,
     PILSEN,
-    IPA
+    IPA,
+    APA
 }
