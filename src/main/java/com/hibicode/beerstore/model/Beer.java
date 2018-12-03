@@ -5,6 +5,9 @@ import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -20,8 +23,14 @@ public class Beer implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @NotBlank
     private String name;
+
+    @NotNull
     private BeerType type;
+
+    @NotNull
+    @DecimalMin("0")
     private BigDecimal volume;
 
 }
