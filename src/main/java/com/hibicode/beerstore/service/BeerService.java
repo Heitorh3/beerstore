@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,16 @@ public class BeerService {
     public Beer save(final Beer beer) {
         verifyIfBeerExists(beer);
         return beers.save(beer);
+    }
+
+    public void delete(final Long id){
+        Optional<Beer> beerExistInDataBase = beers.findById(id);
+
+        if (!beerExistInDataBase.isPresent()){
+            throw new EntityNotFoundException();
+        }
+
+        beers.delete(beerExistInDataBase.get());
     }
 
     private void verifyIfBeerExists(final Beer beer) {

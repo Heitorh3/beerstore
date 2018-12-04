@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.hibicode.beerstore.error.ErrorResponse.ApiError;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Locale;
 import static java.util.stream.Collectors.toList;
@@ -46,6 +47,16 @@ public class ApiExceptionHandler {
 
         return ResponseEntity.badRequest().body(errorResponse);
 
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException exception, Locale locale){
+
+        final String erroCode = "beers-6";
+        final HttpStatus status = HttpStatus.NOT_FOUND;
+        final ErrorResponse errorResponse = ErrorResponse.of(status, toApiError(erroCode, locale, exception.getCause()));
+
+        return ResponseEntity.badRequest().body(errorResponse);
     }
 
     @ExceptionHandler(InvalidFormatException.class)
