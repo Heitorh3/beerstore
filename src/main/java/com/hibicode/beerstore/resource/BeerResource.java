@@ -32,8 +32,9 @@ public class BeerResource {
         return this.beerService.save(beer);
     }
 
-    @PutMapping
-    public Beer update(@RequestBody Beer beer){
-        return null;
+    @PutMapping("/{id}")
+    public Beer update(@PathVariable Long id, @Valid @RequestBody Beer beer){
+        beer.setId(id);
+        return beerService.save(beer);
     }
 }
