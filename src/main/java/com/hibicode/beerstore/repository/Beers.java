@@ -11,6 +11,6 @@ import java.util.Optional;
 @EnableJpaRepositories
 public interface Beers extends JpaRepository<Beer, Long> {
 
-    Optional<Beer> findByNameAndAndType(String name, BeerType type);
+    Optional<Beer> findByNameAndType(String name, BeerType type);
 
 }

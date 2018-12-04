@@ -31,4 +31,9 @@ public class BeerResource {
     public Beer create(@Valid @RequestBody Beer beer){
         return this.beerService.save(beer);
     }
+
+    @PutMapping
+    public Beer update(@RequestBody Beer beer){
+        return null;
+    }
 }
