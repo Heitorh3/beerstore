@@ -20,3 +20,5 @@ resource "aws_instance" "instances" {
 output "public_ips" {
   value = "${join(", ", aws_instance.instances.*.public_ip)}"
 }
+
+// ssh-keygen -t rsa -b 4096 -o -a 100 -f key/beerstore_key
