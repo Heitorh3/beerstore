@@ -27,3 +27,6 @@
 
 ### Terraform ###
 /terraform/.terraform
+
+### Key privada ###
+/key/beerstore_key
