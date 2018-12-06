@@ -20,7 +20,6 @@ resource "aws_subnet" "private_subnet" {
 }
 
 //Cria as redes publicas
-
 resource "aws_subnet" "public_subnet" {
   count = 3
 
@@ -33,4 +32,25 @@ resource "aws_subnet" "public_subnet" {
   tags {
     Name="hibicode_public_subnet_${count.index}"
   }
+}
+
+//Cria o gateway
+resource "aws_internet_gateway" "igtw" {
+  vpc_id = "${aws_vpc.main.id}"
+
+}
+
+resource "aws_route_table" "route_igtw" {
+  vpc_id = "${aws_vpc.main.id}"
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_internet_gateway}"
+  }
+}
+
+resource "aws_route_table_association" "route_table_association" {
+  count = 3
+  route_table_id = "${aws_route_table.route_igtw.id}"
+  subnet_id = "${element(aws_subnet.public_subnet.*.id, count.index )}"
 }
