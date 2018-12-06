@@ -10,3 +10,16 @@ resource "aws_security_group" "allow_ssh" {
     cidr_blocks = ["187.32.231.216/32"]
   }
 }
+
+resource "aws_security_group" "security_group_database" {
+  vpc_id = "${aws_vpc.main.id}"
+  name = "hibicode_database"
+
+  ingress {
+    from_port = 5432
+    protocol = "tcp"
+    to_port = 5432
+    self = true
+  }
+
+}
