@@ -1,0 +1,3 @@
+${PUBLIC_IP_0}
+${PUBLIC_IP_2}
+${PUBLIC_IP_3}
