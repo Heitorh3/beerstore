@@ -1,0 +1,1 @@
+docker run -d --network beer-net -p 8080:8080 -e APP_OPTIONS='--spring.datasource.url=jdbc:postgresql://beerdb:5432/beerstore'  heitorh3/beerstore:0.1
