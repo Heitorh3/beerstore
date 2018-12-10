@@ -5,7 +5,8 @@ resource "aws_key_pair" "key_par" {
 resource "aws_instance" "instances" {
   count = 3
 
-  ami = "ami-009d6802948d06e52"
+  //ami = "ami-009d6802948d06e52"
+  ami = "ami-0080e4c5bc078760e"
   instance_type = "t2.micro"
 
   subnet_id = "${element(aws_subnet.public_subnet.*.id, count.index )}"
