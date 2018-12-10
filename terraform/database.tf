@@ -6,7 +6,7 @@ module "rds" {
   identifier = "hibicode-beerstore-rds"
 
   engine = "postgres"
-  engine_version = "10.14"
+  engine_version = "10.4"
   instance_class =  "db.t2.micro"
   allocated_storage = "20"
 
