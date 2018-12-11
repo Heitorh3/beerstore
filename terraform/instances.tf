@@ -15,7 +15,8 @@ resource "aws_instance" "instances" {
 
   vpc_security_group_ids = ["${aws_security_group.allow_ssh.id}",
                             "${aws_security_group.allow_outbound.id}",
-                            "${aws_security_group.cluster_communication.id}"]
+                            "${aws_security_group.cluster_communication.id}",
+                            "${aws_security_group.allow_portainer.id}"]
 
   tags {
     Name = "hibicode_instances"

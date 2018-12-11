@@ -72,6 +72,18 @@ resource "aws_security_group" "cluster_communication" {
 
 }
 
+resource "aws_security_group" "allow_portainer" {
+  vpc_id = "${aws_vpc.main.id}"
+  name = "hibicode_allow_portainer"
+
+  ingress {
+    from_port = 9000
+    to_port = 9000
+    protocol = "tcp"
+    cidr_blocks = ["${var.my_public_ip}"]
+  }
+}
+
 resource "aws_security_group" "allow_app" {
   vpc_id = "${aws_vpc.main.id}"
   name = "hibicode_allow_app"
