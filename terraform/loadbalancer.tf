@@ -1,6 +1,6 @@
 resource "aws_lb" "load_balancer" {
   name = "hibicode-beerstore-alb"
-  security_groups = [""]
+  security_groups = ["${aws_security_group.allow_load_balancer.id}"]
   subnets = ["${flatten(chunklist(aws_subnet.public_subnet.*.id,1))}"]
 
   enable_deletion_protection = false
@@ -17,8 +17,8 @@ resource "aws_lb_target_group" "load_balancer_target_group" {
     path = "/actuator/health"
     matcher = 200
     interval = 120
-    healthy_threshold = 5
-    unhealthy_threshold = 3
+    healthy_threshold = 2
+    unhealthy_threshold = 2
     timeout = 10
   }
 }

@@ -72,15 +72,24 @@ resource "aws_security_group" "cluster_communication" {
 
 }
 
-resource "aws_security_group" "allow_portainer" {
+resource "aws_security_group" "allow_load_balancer" {
   vpc_id = "${aws_vpc.main.id}"
-  name = "hibicode_allow_portainer"
+  name = "hibicode_allow_load_balancer"
 
   ingress {
-    from_port = 9000
-    to_port = 9000
+    from_port = 80
+    to_port = 80
     protocol = "tcp"
-    cidr_blocks = ["${var.my_public_ip}"]
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 8080
+    to_port = 8080
+    protocol = "tcp"
+    cidr_blocks = [
+      "${flatten(chunklist(aws_subnet.public_subnet.*.cidr_block, 1))}"
+      ]
   }
 }
 
@@ -102,5 +111,19 @@ resource "aws_security_group" "allow_app" {
     cidr_blocks = [
       "${flatten(
             chunklist(aws_subnet.public_subnet.*.cidr_block, 1))}"]
+  }
+}
+
+
+/* Esse security group esta sendo substitudo pelo allow_app que tem a mesma função. */
+resource "aws_security_group" "allow_portainer" {
+  vpc_id = "${aws_vpc.main.id}"
+  name = "hibicode_allow_portainer"
+
+  ingress {
+    from_port = 9000
+    to_port = 9000
+    protocol = "tcp"
+    cidr_blocks = ["${var.my_public_ip}"]
   }
 }
